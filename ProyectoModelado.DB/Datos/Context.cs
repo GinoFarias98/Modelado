@@ -25,13 +25,33 @@ namespace ProyectoModelado.DB.Datos
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-            // Relación uno a muchos: Socio - Cuota
+            // Configuracion de CuotaPrestamo
+            modelBuilder.Entity<CuotaPrestamo>()
+                .HasOne(cp => cp.Socio)
+                .WithMany(s => s.CuotasPrestamo)
+                .HasForeignKey(cp => cp.IdSocio)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<CuotaPrestamo>()
+                .HasOne(cp => cp.Prestamo)
+                .WithMany(p => p.CuotasPrestamo)
+                .HasForeignKey(cp => cp.IdPrestamo)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Configuracipn de Prestamo
+            modelBuilder.Entity<Prestamo>()
+                .HasOne(p => p.Socio)
+                .WithMany(s => s.Prestamos)
+                .HasForeignKey(p => p.IdSocio)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Relacion uno a muchos: Socio - Cuota
             modelBuilder.Entity<Socio>()
                 .HasMany(s => s.Cuotas)
                 .WithOne(c => c.Socio)
                 .HasForeignKey(c => c.IdSocio);
 
-            // Relación uno a muchos: Cliente - Entrega
+            // Relacion uno a muchos: Cliente - Entrega
             modelBuilder.Entity<Cliente>()
                 .HasMany(c => c.Entregas)
                 .WithOne(e => e.Cliente)

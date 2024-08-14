@@ -22,8 +22,13 @@ namespace ProyectoModelado.DB.Datos.Entidades
         public DateTime FechaNacimiento { get; set; }
         public string Direccion { get; set; }
         public bool Estado { get; set; }
-        public int IdVehiculo { get; set; }
-        public int IdInfoRegistro { get; set; }
+        public int IdVehiculo { get; set; } 
+
+        public int IdPrestamo { get; set; }
+        public bool EsMoroso { get; set; }
+        public int CantidadPrestamosMoroso { get; set; }
+        public int CantidadTotalprestamos { get; set; }
+
 
         [ForeignKey("IdVehiculo")]
         public Vehiculo Vehiculo { get; set; }
@@ -33,6 +38,9 @@ namespace ProyectoModelado.DB.Datos.Entidades
 
         // Relación uno-a-muchos con Cuotas
         public ICollection<Cuota> Cuotas { get; set; }
+
+        public ICollection<Prestamo> Prestamos { get; set; }
+        public ICollection<CuotaPrestamo> CuotasPrestamo { get; set; }
 
     }
 }
